@@ -132,5 +132,10 @@
       }
     }
   },
-  "defaultProject": "angularmaterialdemo"
+  "defaultProject": "angularmaterialdemo",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
