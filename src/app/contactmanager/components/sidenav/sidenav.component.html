@@ -1,11 +1,6 @@
-
-
 <mat-sidenav-container class="app-sidenav-container">
-  <mat-sidenav #sidenav [mode] ="isScreenSmall() ? 'over' : 'side'" [opened]="!isScreenSmall()" (opened)="events.push('open!')"
-               (closed)="events.push('close!')"
-               class="app-sidenav mat-elevation-z10"
-               
-               >
+  <mat-sidenav #sidenav [mode]="isScreenSmall() ? 'over' : 'side'" [opened]="!isScreenSmall()"
+    (opened)="events.push('open!')" (closed)="events.push('close!')" class="app-sidenav mat-elevation-z10">
     <mat-toolbar color="primary">Contacts</mat-toolbar>
     <mat-list role="list">
       <mat-list-item role="listitem">Item 1</mat-list-item>
@@ -15,11 +10,9 @@
   </mat-sidenav>
 
   <mat-sidenav-content class="app-sidenav-content ">
-      <app-toolbar  (toggleSidenav) = "sidenav.toggle()">  </app-toolbar>
+    <app-toolbar (toggleSidenav)="sidenav.toggle()"> </app-toolbar>
+    <div class="wrapper">
       <router-outlet></router-outlet>
-    <p>Events:</p>
-    <div class="example-events">
-      <div *ngFor="let e of events">{{e}}</div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
