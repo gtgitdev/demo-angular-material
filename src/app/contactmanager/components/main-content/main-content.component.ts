@@ -30,8 +30,8 @@ export class MainContentComponent implements OnInit {
         }
 
         this.user = this.userService.userById(id);
-      })
-      console.log(this.user);
+      });
+
     });
   }
 
