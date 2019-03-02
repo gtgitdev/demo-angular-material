@@ -15,24 +15,28 @@ export class UserService {
   };
 
   constructor(private http: HttpClient) {
-    this.dataStore = {users: [] };
+    this.dataStore = { users: [] };
     this.usersSubject = new BehaviorSubject<User[]>([]);
-   }
+  }
 
-   get users(): Observable<User[]> {
-     return this.usersSubject.asObservable();
-   }
+  get users(): Observable<User[]> {
+    return this.usersSubject.asObservable();
+  }
 
-   loadAll() {
-     const usersUrl = 'https://angular-material-api.azurewebsites.net/users';
+  userById(id: number) {
+    return this.dataStore.users.find(x => x.id === +id);
+  }
 
-     return this.http.get<User[]>(usersUrl)
-     .subscribe((data) => {
-       this.dataStore.users = data;
-       this.usersSubject.next(Object.assign({}, this.dataStore).users);
-     }, (error) => {
-       console.log('Failed to fetch users');
-     });
+  loadAll() {
+    const usersUrl = 'https://angular-material-api.azurewebsites.net/users';
 
-   }
+    return this.http.get<User[]>(usersUrl)
+      .subscribe((data) => {
+        this.dataStore.users = data;
+        this.usersSubject.next(Object.assign({}, this.dataStore).users);
+      }, (error) => {
+        console.log('Failed to fetch users');
+      });
+
+  }
 }

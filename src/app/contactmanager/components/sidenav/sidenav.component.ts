@@ -1,8 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import {MediaMatcher} from '@angular/cdk/layout';
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
 import { UserService } from '../../services/user.service';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user';
+import { Router } from '@angular/router';
 
 const SmallWidthBreakpoint = 720;
 
@@ -14,8 +15,8 @@ const SmallWidthBreakpoint = 720;
 export class SidenavComponent implements OnInit, OnDestroy {
 
   mobileQuery: MediaQueryList;
+  @ViewChild('sidenav') sideNav;
 
-  events: string[] = [];
   opened = true;
 
   private mobileQueryListener: () => void;
@@ -24,7 +25,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   constructor(changeDetectorRef: ChangeDetectorRef,
               media: MediaMatcher,
-              private userService: UserService) {
+              private userService: UserService,
+              private router: Router) {
     this.mobileQuery = media.matchMedia(`(max-width: ${SmallWidthBreakpoint}px)`);
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this.mobileQueryListener);
@@ -34,9 +36,12 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.users = this.userService.users;
     this.userService.loadAll();
 
-    this.users.subscribe((data) => {
-      console.log(data);
+    this.router.events.subscribe(() => {
+      if (this.isScreenSmall()) {
+        this.sideNav.close();
+      }
     });
+
   }
 
   ngOnDestroy(): void {
