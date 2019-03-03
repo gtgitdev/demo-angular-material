@@ -22,6 +22,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
   private mobileQueryListener: () => void;
 
   users: Observable<User[]>;
+  isDarkTheme = false;
+  direction = 'ltr';
 
   constructor(changeDetectorRef: ChangeDetectorRef,
               media: MediaMatcher,
@@ -50,5 +52,13 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   isScreenSmall(): boolean {
     return this.mobileQuery.matches;
+  }
+
+  toggleTheme(){
+    this.isDarkTheme = !this.isDarkTheme;
+  }
+
+  toggleDirection(){
+    this.direction = this.direction === 'ltr' ? 'rtl' : 'ltr';
   }
 }

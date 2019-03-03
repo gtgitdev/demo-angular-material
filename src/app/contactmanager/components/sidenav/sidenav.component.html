@@ -1,4 +1,4 @@
-<mat-sidenav-container class="app-sidenav-container">
+<mat-sidenav-container class="app-sidenav-container" [class.dark-theme]="isDarkTheme" [dir]="direction">
   <mat-sidenav #sidenav [mode]="isScreenSmall() ? 'over' : 'side'" [opened]="!isScreenSmall()"
     class="app-sidenav mat-elevation-z10">
     <mat-toolbar color="primary">Contacts</mat-toolbar>
@@ -10,7 +10,10 @@
   </mat-sidenav>
 
   <mat-sidenav-content class="app-sidenav-content ">
-    <app-toolbar (toggleSidenav)="sidenav.toggle()"> </app-toolbar>
+    <app-toolbar (toggleTheme)="toggleTheme()" 
+                 (toggleSidenav)="sidenav.toggle()"
+                 (toggleDirection)="toggleDirection()"
+                 > </app-toolbar>
     <div class="wrapper">
       <router-outlet></router-outlet>
     </div>
